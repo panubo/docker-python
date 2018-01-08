@@ -1,4 +1,8 @@
-# Python 2.7, 3.2, 3.3, 3.4 & 3.5
+# Python Base
 
-This container builds the latest [Python](http://python.org) versions from source. 
+This container builds the latest [Python](http://python.org) versions from
+source. The base container is CentOS 7.
 
+## Status
+
+Stable.
