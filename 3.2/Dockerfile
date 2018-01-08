@@ -3,7 +3,7 @@
 # Base: centos7
 
 FROM centos:centos7
-MAINTAINER Andrew Cutler <andrew@voltgrid.com>
+MAINTAINER Andrew Cutler <andrew@panubo.com>
 
 # 1. Update & Install
 # 2. Required for virtualenv bootstrap / install
@@ -18,11 +18,11 @@ RUN rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7 && \
     yum -q clean all
 
 # Compile & Install Python from source
-RUN for PYTHON in 3.2.6; do mkdir -p /dev/tmp && cd /dev/tmp && curl -O https://www.python.org/ftp/python/${PYTHON}/Python-${PYTHON}.tgz && tar -xzf Python-${PYTHON}.tgz && \
-    cd /dev/tmp/Python-${PYTHON} && ./configure && make -j `nproc` && make install && rm -rf /dev/tmp/Python-${PYTHON}; done
+RUN for PYTHON in 3.2.6; do mkdir -p /tmp/build && cd /tmp/build && curl -O https://www.python.org/ftp/python/${PYTHON}/Python-${PYTHON}.tgz && tar -xzf Python-${PYTHON}.tgz && \
+    cd /tmp/build/Python-${PYTHON} && ./configure && make -j `nproc` && make install && rm -rf /tmp/build/Python-${PYTHON}; done
 
 # Clean up
-RUN rm -rf /tmp/* /dev/tmp/ /var/tmp/* && \
-    # Remove links to indefinite Python versions (also prevents os Python from being overriden by accident)
+RUN rm -rf /tmp/* /tmp/build/ /var/tmp/* && \
+    # Remove links to indefinite Python versions (also prevents os Python from being overridden by accident)
     find /usr/local/bin/ -type l -exec rm {} \; && \
     rm -rf /var/cache/yum/*
