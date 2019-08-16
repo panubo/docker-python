@@ -22,13 +22,13 @@ function pull_container {
 
 for v in 2.7 3.2 3.3 3.4 3.5 3.6 3.7; do
   [ "${TRAVIS}" == 'true' ] && pull_container ${v} || build_container ${v}
-  OUTPUT=$(docker run --rm -ti panubo/python:${v}-test python${v} --version)
-  [[ "${OUTPUT}" = "Python ${v}"* ]] || { echo "Version test failed. $OUTPUT"; exit 128; } && { echo "> $v OK."; }
+  OUTPUT="$(docker run --rm -ti panubo/python:${v}-test python${v} --version)"
+  [[ "${OUTPUT}" == *"Python ${v}"* ]] || { echo "Version test failed. $OUTPUT"; exit 128; } && { echo "> $v OK."; }
 done
 
 # All versions test
 [ "${TRAVIS}" == 'true' ] && pull_container all || build_container all
 for v in 2.7 3.3 3.4 3.5 3.6 3.7; do
   OUTPUT=$(docker run --rm -ti panubo/python:all-test python${v} --version)
-  [[ "${OUTPUT}" = "Python ${v}"* ]] || { echo "Version test failed. $OUTPUT"; exit 128; } && { echo "> $v OK."; }
+  [[ "${OUTPUT}" == *"Python ${v}"* ]] || { echo "Version test failed. $OUTPUT"; exit 128; } && { echo "> $v OK."; }
 done

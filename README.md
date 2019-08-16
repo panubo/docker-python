@@ -1,6 +1,6 @@
 # Python Base
 
-[![Build Status](https://travis-ci.org/panubo/docker-python.svg?branch=master)](https://travis-ci.org/panubo/docker-python)
+[![CircleCI](https://circleci.com/gh/panubo/docker-python.svg?style=svg)](https://circleci.com/gh/panubo/docker-python)
 
 This builds the latest [Python](http://python.org) versions from source. The base container is CentOS 7.
 
