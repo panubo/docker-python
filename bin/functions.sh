@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-function build_container {
+function build_image {
   VERSION="$1"
   SUFFIX="$2"
   pushd ${VERSION} 1> /dev/null
@@ -13,7 +13,7 @@ function build_container {
   popd 1> /dev/null
 }
 
-function pull_container {
+function pull_image {
   VERSION="$1"
   SUFFIX="$2"
   echo ">> Pulling ${VERSION}"
@@ -21,7 +21,13 @@ function pull_container {
   docker tag panubo/python:${VERSION} panubo/python:${VERSION}${SUFFIX}
 }
 
-function test_container {
+function push_image {
+  TAG="$1"
+  echo ">> Pushing ${TAG}"
+  docker push panubo/python:${TAG}
+}
+
+function test_image {
   VERSION="$1"
   TAG="$2"
   OUTPUT="$(docker run --rm -ti panubo/python:${TAG} python${VERSION} --version)"
