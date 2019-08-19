@@ -8,4 +8,4 @@ jobs:
           apk add --no-cache bash curl
       - checkout
       - setup_remote_docker
-      - run: tests/test.sh
+      - run: bin/test.sh
