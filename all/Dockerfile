@@ -16,8 +16,9 @@ RUN rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7 && \
     yum -q clean all
 
 # Compile & Install Python from source
-RUN for PYTHON in ${PYTHON_VERSIONS}; do mkdir -p /tmp/build && cd /tmp/build && curl -O https://www.python.org/ftp/python/${PYTHON}/Python-${PYTHON}.tgz && tar -xzf Python-${PYTHON}.tgz && \
-    cd /tmp/build/Python-${PYTHON} && ./configure && make -j `nproc` && make install && rm -rf /tmp/build/Python-${PYTHON}; done
+# Check binary is sane
+RUN for VERSION in ${PYTHON_VERSIONS}; do mkdir -p /tmp/build && cd /tmp/build && curl -O https://www.python.org/ftp/python/${VERSION}/Python-${VERSION}.tgz && tar -xzf Python-${VERSION}.tgz && \
+    cd /tmp/build/Python-${VERSION} && ./configure && make -j `nproc` && make install && rm -rf /tmp/build/Python-${VERSION}; /usr/local/bin/python${VERSION%.*} --version; done
 
 # Clean up
 # Also Remove links to indefinite Python versions (also prevents os Python from being overridden by accident)
